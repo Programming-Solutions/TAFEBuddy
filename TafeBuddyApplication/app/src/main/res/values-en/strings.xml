@@ -1,11 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TAFE Buddy</string>
-    <string name="title_campus_list">Campuses</string>
-    <string name="title_campus_detail">Campus Detail</string>
-    <string name="title_activity_webview">WebviewActivity</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- Buttons -->
     <string name="Agenda">Agenda</string>
     <string name="AgendaDesc">Agenda Button</string>
@@ -24,7 +19,5 @@
 
     <string name="Email">Email</string>
     <string name="EmailDesc">Email Button</string>
-
-    <string name="TAFELogo">TAFE Logo</string>
 
 </resources>

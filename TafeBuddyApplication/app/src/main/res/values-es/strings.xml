@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Buttons -->
+    <string name="Agenda">Calendario</string>
+    <string name="AgendaDesc">Calendario Botón</string>
+
+    <string name="MyAccount">Mi Cuenta</string>
+    <string name="MyAccountDesc">>Mi Cuenta Botón</string>
+
+    <string name="FAQ">Preguntas Más Frecuentes</string>
+    <string name="FAQDesc">Preguntas Botón</string>
+
+    <string name="Campuses">Campus Mapas</string>
+    <string name="CampusesDesc">Campus Mapas Botón</string>
+
+    <string name="CounsellingSession">Lección Asesoramiento</string>
+    <string name="CounsellingSessionDesc">Lección Asesoramiento Botón</string>
+
+    <string name="Email">Email</string>
+    <string name="EmailDesc">Email Botón</string>
+
+</resources>

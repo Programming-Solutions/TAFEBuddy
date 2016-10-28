@@ -23,6 +23,7 @@ import android.view.WindowManager;
 
 import android.widget.ImageButton;
 
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.content.Intent;
 
@@ -75,6 +76,10 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         //setting up the toolbar layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainpage_toobar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("");
+        toolbar.setSubtitle("");
+
 
         //creating a navigation drawer.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,65 +125,47 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         super.onStart();
         customTabActivityHelper.bindCustomTabsService(this);
 
+
         //creating a custom tab and making customizing the animations and toolbar.
         final CustomTabsIntent.Builder intent = new CustomTabsIntent.Builder(customTabActivityHelper.getSession());
-        final CustomTabsIntent.Builder intentBlue = new CustomTabsIntent.Builder(customTabActivityHelper.getSession());
         //setting the toolbar color also allowing the tab to show the title of the wabpage.
-        intent.setToolbarColor(Color.RED).setShowTitle(true);
-        intentBlue.setToolbarColor(Color.BLUE).setShowTitle(true);
-
-        //this will change the custom animations for custom tab using animatinos resource files.
-        intent.setStartAnimations(MainPage.this, R.anim.slide_in_right, R.anim.slide_out_left);
-        intent.setExitAnimations(MainPage.this, android.R.anim.slide_in_left,
-                android.R.anim.slide_out_right);
-        intentBlue.setStartAnimations(MainPage.this, R.anim.slide_in_right, R.anim.slide_out_left);
-        intentBlue.setExitAnimations(MainPage.this, android.R.anim.slide_in_left,
-                android.R.anim.slide_out_right);
+        intent.setToolbarColor(Color.parseColor("#d32f2f")).setShowTitle(true);
 
         //setting the home button in the custom tab
         intent.setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back));
-        intentBlue.setCloseButtonIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back));
         //this will hide the URL bar when a user scrolls down the page.
         intent.enableUrlBarHiding();
-        intentBlue.enableUrlBarHiding();
 
         //this adds to the menu android default share.
         intent.addDefaultShareMenuItem();
-        intentBlue.addDefaultShareMenuItem();
         // prepareActionButton(intent);
-        //   prepareActionButton(intentBlue);
 
         //assigning the buttons
-        ImageButton btnAgenda = (ImageButton) findViewById(R.id.btnAgenda);
-        ImageButton btnMap = (ImageButton) findViewById(R.id.btnMap);
-        ImageButton btnBookCounselling = (ImageButton) findViewById(R.id.btnBookCounselling);
-        ImageButton btnCalendar = (ImageButton) findViewById(R.id.btnAccount);
-        ImageButton btnVideos = (ImageButton) findViewById(R.id.btnEmail);
-        ImageButton btnFAQPage = (ImageButton) findViewById(R.id.btnFAQPage);
+        LinearLayout btnAgenda= (LinearLayout) findViewById(R.id.btnAgenda);
+        LinearLayout btnMap = (LinearLayout) findViewById(R.id.btnCampuses);
+        LinearLayout btnBookCounselling = (LinearLayout) findViewById(R.id.btnBookCounselling);
+        LinearLayout btnCalendar = (LinearLayout) findViewById(R.id.btnMyAccount);
+        LinearLayout btnVideos = (LinearLayout) findViewById(R.id.btnEmail);
+        LinearLayout btnFAQPage = (LinearLayout) findViewById(R.id.btnFAQ);
 
         btnAgenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //debugging
-                Toast.makeText(MainPage.this, "Agenda Clicked", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainPage.this, "Agenda Clicked", Toast.LENGTH_SHORT).show();
                 //parseing the string into a uri
-                Uri uri = Uri.parse(COURSE_SCHEDULE);
+                Uri uri  = Uri.parse(COURSE_SCHEDULE);
                 //sending the information to the helper to process
-                CustomTabActivityHelper.openCustomTab(MainPage.this, intent.build(), uri, new WebviewFallback());
+                CustomTabActivityHelper.openCustomTab(MainPage.this,intent.build(),uri,new WebviewFallback());
 
-                //testing how firebase analytics works have to wait 24 hours to view it on
-                // the console.
-                Bundle analytics = new Bundle();
-                analytics.putString(FirebaseAnalytics.Param.ITEM_NAME, "AgendaCustomTab");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, analytics);
             }
         });
         btnBookCounselling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "BookCounselling Clicked", Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse(COUNSELLING_BOOKING);
-                CustomTabActivityHelper.openCustomTab(MainPage.this, intent.build(), uri, new WebviewFallback());
+               // Toast.makeText(MainPage.this, "BookCounselling Clicked", Toast.LENGTH_SHORT).show();
+                Uri uri  = Uri.parse(COUNSELLING_BOOKING);
+                CustomTabActivityHelper.openCustomTab(MainPage.this,intent.build(),uri,new WebviewFallback());
 
             }
         });
@@ -186,27 +173,27 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnFAQPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "FAQPage Clicked", Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse(FAQ);
-                CustomTabActivityHelper.openCustomTab(MainPage.this, intentBlue.build(), uri, new WebviewFallback());
+               // Toast.makeText(MainPage.this, "FAQPage Clicked", Toast.LENGTH_SHORT).show();
+                Uri uri  = Uri.parse(FAQ);
+                CustomTabActivityHelper.openCustomTab(MainPage.this,intent.build(),uri,new WebviewFallback());;
             }
         });
 
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "Account Clicked", Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse(ACCOUNT);
-                CustomTabActivityHelper.openCustomTab(MainPage.this, intent.build(), uri, new WebviewFallback());
+               // Toast.makeText(MainPage.this, "Account Clicked", Toast.LENGTH_SHORT).show();
+                Uri uri  = Uri.parse(ACCOUNT);
+                CustomTabActivityHelper.openCustomTab(MainPage.this,intent.build(),uri,new WebviewFallback());
             }
         });
 
         btnVideos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "Email Clicked", Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse(EMAIL);
-                CustomTabActivityHelper.openCustomTab(MainPage.this, intentBlue.build(), uri, new WebviewFallback());
+                //Toast.makeText(MainPage.this, "Email Clicked", Toast.LENGTH_SHORT).show();
+                Uri uri=Uri.parse(EMAIL);
+                CustomTabActivityHelper.openCustomTab(MainPage.this,intent.build(),uri,new WebviewFallback());
 
             }
         });
@@ -214,7 +201,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "Map Clicked", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainPage.this, "Map Clicked", Toast.LENGTH_SHORT).show();
                 Intent mapIntent = new Intent(MainPage.this, CampusListActivity.class);
                 startActivity(mapIntent);
             }
