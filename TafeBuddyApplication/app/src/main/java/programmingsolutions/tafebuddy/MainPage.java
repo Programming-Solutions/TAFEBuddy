@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,7 +37,6 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
 
     //creating the recycler view to handle the rss feed
     RecyclerView recyclerView ;
-
 
     //setting up the custom tab helper class
     private CustomTabActivityHelper customTabActivityHelper;
@@ -98,6 +98,9 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
 
         //link the recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
         //initializing the rss feed
         ReadRSS readRSS = new ReadRSS(this, recyclerView);
         // Start download RSS task

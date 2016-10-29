@@ -36,7 +36,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.MyViewHolder> {
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.custom_rss_feed,parent,false);
+        View view= LayoutInflater.from(context).inflate(R.layout.main_card_layout,parent,false);
         MyViewHolder holder=new MyViewHolder(view);
         return holder;
     }
@@ -88,11 +88,11 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.MyViewHolder> {
         CardView cardView;
         public MyViewHolder(View itemView) {
             super(itemView);
-            Title= (TextView) itemView.findViewById(R.id.title_text);
-            Description= (TextView) itemView.findViewById(R.id.description_text);
-            Date= (TextView) itemView.findViewById(R.id.date_text);
+            Title= (TextView) itemView.findViewById(R.id.card_title);
+            Description= (TextView) itemView.findViewById(R.id.card_description);
+            Date= (TextView) itemView.findViewById(R.id.card_date);
             //Thumbnail= (ImageView) itemView.findViewById(R.id.thumb_img);
-            cardView= (CardView) itemView.findViewById(R.id.custom_rss_feed);
+            cardView= (CardView) itemView.findViewById(R.id.custom_card_view);
         }
     }
 }
