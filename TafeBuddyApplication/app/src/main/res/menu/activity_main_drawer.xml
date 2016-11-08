@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_courses"
-            android:icon="@drawable/ic_action_action_book"
+            android:icon="@drawable/ic_account_box"
             android:title="@string/btn_course_information"></item>
         <item
             android:id="@+id/nav_videos"
@@ -24,7 +24,7 @@
             android:title="@string/btn_tasks" />
         <item
             android:id="@+id/nav_files"
-            android:icon="@drawable/ic_action_action_assignment"
+            android:icon="@drawable/ic_info_black_24dp"
             android:title="@string/btn_files" />
 
     </group>
