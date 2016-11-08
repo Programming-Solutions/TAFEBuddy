@@ -300,7 +300,7 @@ Full-Width Styles
   font-size: 42px;
   font-weight: 700;
   text-shadow: #111 0px 0px 10px;
-  background: url('../images\tafelogored.png') no-repeat 95% 50%;
+      width: 25%;
 }
 
 #project_tagline {
