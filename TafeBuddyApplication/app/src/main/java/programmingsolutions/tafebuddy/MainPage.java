@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -40,7 +42,6 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
 
     //creating the recycler view to handle the rss feed
     RecyclerView recyclerView ;
-
 
     //setting up the custom tab helper class
     private CustomTabActivityHelper customTabActivityHelper;
@@ -72,6 +73,21 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_layout);
 
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
+
+        if (isFirstRun){
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isFirstRun", false).apply();
+
+            Toast.makeText(MainPage.this, "First Run", Toast.LENGTH_LONG).show();
+            Intent mapIntent = new Intent(MainPage.this, FirstRunActivity.class);
+            startActivity(mapIntent);
+        }
+
+        final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+        final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+
+        RelativeLayout mainpage = (RelativeLayout) findViewById(R.id.activity_main_page);
+                mainpage.setBackground(wallpaperDrawable);
         // Obtain the FirebaseAnalytics instance.
         //this will want access to the Wake Lock permission no way to get arnound it
         //will have to see if battery drain is a problem with it!!
