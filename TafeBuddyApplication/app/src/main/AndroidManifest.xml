@@ -28,6 +28,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".FirstRunActivity"
+            android:label="@string/title_first_run"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -87,11 +93,7 @@
         <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
         <category android:name="android.intent.category.DEFAULT" />
     </intent-filter>
-        <activity
-            android:name=".FirstRunActivity"
-            android:label="@string/title_first_run"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-</activity>
+
+    </activity>
 </application>
 </manifest>
