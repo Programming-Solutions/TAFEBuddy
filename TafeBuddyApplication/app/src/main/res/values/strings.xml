@@ -3,7 +3,6 @@
     <string name="title_campus_list">Campuses</string>
     <string name="title_campus_detail">Campus Detail</string>
     <string name="title_activity_webview">WebviewActivity</string>
-    <string name="title_first_run">First Run</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
