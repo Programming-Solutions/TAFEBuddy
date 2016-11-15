@@ -45,6 +45,8 @@ class CustomTabActivityHelper implements ServiceConnectionCallback {
     static final String ACCOUNT_MAIN_PAGE = "https://my.tafesa.edu.au/PROD/twbkwbis.P_GenMenu?name=bmenu.P_MainMnu#pageName=bmenu--P_StuMainMnu___UID0&pageReferrerId=&pageDepth=2&options=false";
     static final String FILES = "http://netstorage.tafesa.edu.au/SitePages/Home.aspx";
     static final String COURSE_INFORMATION = "https://www.tafensw.edu.au/courses/tafe-nsw-course-search";
+    static final String MOODLE = "http://learn.tafesa.edu.au/my/";
+
 
 
     //opens the URL on a Custom Tab if possible ortherwise it will fall back to opening it on a WebView.
@@ -151,6 +153,9 @@ class CustomTabActivityHelper implements ServiceConnectionCallback {
         campusBundle.putString("Email", EMAIL);
         campusBundle.putString("Account Mainpage", ACCOUNT_MAIN_PAGE);
         campusBundle.putString("Files", FILES);
+        campusBundle.putString("Moodle", MOODLE);
+        campusBundle.putString("courseInformation", COURSE_INFORMATION);
+
 
 
 

@@ -28,7 +28,7 @@
                 android:contentDescription="@string/TAFELogo"/>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/mainpage_toobar"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:popupTheme="@style/AppTheme.NoActionBar"
                 android:layout_marginTop="17dp"
 
                 android:layout_width="match_parent"

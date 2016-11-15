@@ -37,7 +37,7 @@ public class WebviewActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
 
         //setting the title of the page url for now
-        setTitle(url);
+        setTitle("Tafe Buddy");
         getSupportActionBar();
         //setting the actionbar to show home button arrow
 

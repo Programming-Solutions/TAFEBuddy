@@ -23,9 +23,9 @@
             android:icon="@drawable/ic_alarm_add"
             android:title="@string/btn_tasks" />
         <item
-            android:id="@+id/nav_files"
+            android:id="@+id/nav_moodle"
             android:icon="@drawable/ic_info_black_24dp"
-            android:title="@string/btn_files" />
+            android:title="@string/btn_moodle" />
 
     </group>
 
