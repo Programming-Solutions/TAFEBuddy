@@ -1,6 +1,5 @@
 package programmingsolutions.tafebuddy;
 
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,9 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -20,21 +17,16 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.google.firebase.analytics.FirebaseAnalytics;
-
 import custom_tabs.CustomTabsHelper;
 import rss_classes.ReadRSS;
 
@@ -43,15 +35,19 @@ import rss_classes.ReadRSS;
 
 public class MainPage extends AppCompatActivity implements View.OnClickListener, CustomTabActivityHelper.ConnectionCallback, NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-
     //creating the recycler view to handle the rss feed
     RecyclerView recyclerView ;
-    private Toolbar toolbar;
+
     //setting up the custom tab helper class
     private CustomTabActivityHelper customTabActivityHelper;
-    private SharedPreferences sharedPreferences;
+
     //this is for Firebase analysiation
     private FirebaseAnalytics mFirebaseAnalytics;
+
+    //shared preference object
+    SharedPreferences sharedPreferences;
+
+
     //Urls
     static final String COURSE_SCHEDULE = "https://my.tafesa.edu.au/PROD/bwskfshd.P_CrseSchd";
     static final String COUNSELLING_BOOKING = "http://itstudies.simplybook.me/index/about";
@@ -63,6 +59,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
     static final String USERDETAILS = "https://my.tafesa.edu.au/PROD/twbkwbis.P_GenMenu?name=bmenu.P_MainMnu#pageName=bmenu--P_GenMnu___UID1&pageReferrerId=&pageDepth=2&options=false";
     static final String EMAIL = "https://outlook.office.com/owa/?realm=student.tafesa.edu.au&exsvurl=1&delegatedOrg=tafesaedu.onmicrosoft.com&ll-cc=1033&modurl=0";
     static final String COURSE_INFORMATION = "https://www.tafensw.edu.au/courses/tafe-nsw-course-search";
+    static final String MOODLE = "http://learn.tafesa.edu.au/my/";
 
 
     //prefrences Strings
@@ -73,11 +70,9 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         setContentView(R.layout.navigation_layout);
-        toolbar = (Toolbar) findViewById(R.id.mainpage_toobar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("");
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
 
@@ -88,6 +83,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
             Intent mapIntent = new Intent(MainPage.this, FirstRunActivity.class);
             startActivity(mapIntent);
         }
+
         // Obtain the FirebaseAnalytics instance.
         //this will want access to the Wake Lock permission no way to get arnound it
         //will have to see if battery drain is a problem with it!!
@@ -99,8 +95,11 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         //lets the helper know that we want this class to be used.
         customTabActivityHelper.setConnectionCallback(this);
 
+
+
         //loading prefrences for the main page
-        loadPreferences();
+        loadPrefrences();
+        getReadyToolBar();
 
     }
 
@@ -120,25 +119,15 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         super.onStart();
         customTabActivityHelper.bindCustomTabsService(this);
 
-        TextView userName = (TextView) findViewById(R.id.txtViewName);
+        getReadyToolBar();
+        setNamePreference();
 
-        String user_name = sharedPreferences.getString("user_name","");
 
-        userName.setText(String.format(this.getString(R.string.welcome_message),user_name));
-
-        //setting up the toolbar layout
         //this will lock the screen to portrait view and display it in fullscreen mode.f
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("");
-        //creating a navigation drawer.
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //creating the action bar
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -154,10 +143,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnAgenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //debugging
-                Toast.makeText(MainPage.this, "Agenda Clicked", Toast.LENGTH_SHORT).show();
-
-                //parseing the string into a uri
+                 //parseing the string into a uri
                 Uri uri = Uri.parse(COURSE_SCHEDULE);
                 openCustomTab(uri);
 
@@ -171,7 +157,6 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnBookCounselling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "BookCounselling Clicked", Toast.LENGTH_SHORT).show();
                 Uri uri = Uri.parse(COUNSELLING_BOOKING);
                 openCustomTab(uri);
 
@@ -181,8 +166,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnFAQPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "FAQPage Clicked", Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse(FAQ);
+               Uri uri = Uri.parse(FAQ);
                 openCustomTab(uri);
             }
         });
@@ -190,8 +174,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "Account Clicked", Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse(ACCOUNT);
+               Uri uri = Uri.parse(ACCOUNT);
                 openCustomTab(uri);
             }
         });
@@ -199,8 +182,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnVideos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "Email Clicked", Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse(EMAIL);
+               Uri uri = Uri.parse(EMAIL);
                 openCustomTab(uri);
 
             }
@@ -209,7 +191,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainPage.this, "Map Clicked", Toast.LENGTH_SHORT).show();
+
                 Intent mapIntent = new Intent(MainPage.this, CampusListActivity.class);
                 startActivity(mapIntent);
             }
@@ -252,8 +234,8 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         } else if (id == R.id.nav_tasks) {
             Uri uri = Uri.parse(USERDETAILS);
             openCustomTab(uri);
-        } else if (id == R.id.nav_files) {
-            Uri uri = Uri.parse(ACCOUNT);
+        } else if (id == R.id.nav_moodle) {
+            Uri uri = Uri.parse(MOODLE);
             openCustomTab(uri);
         } else if (id == R.id.nav_settings){
             Intent settingsIntent = new Intent(MainPage.this, SettingsActivity.class);
@@ -310,7 +292,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         Intent actionIntent = new Intent(Intent.ACTION_SEND);
         actionIntent.setType("*/*");
         actionIntent.putExtra(Intent.EXTRA_EMAIL, "example@example.com");
-        actionIntent.putExtra(Intent.EXTRA_SUBJECT, "example");
+        actionIntent.putExtra(Intent.EXTRA_SUBJECT, "Send a Email from the Tafe Buddy Application");
         PendingIntent pi = PendingIntent.getActivity(this, 0, actionIntent, 0);
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_ic_action_email);
         builder.setActionButton(icon, "send email", pi, true);
@@ -324,10 +306,9 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
     }
 
 
-    //this is where you can set the preferences for the app call from the onCreate Method as having it
+    //this is where you can set the prefrences for the app call from the onCreate Method as having it
     //in the onStart method makes it load the RSS feed every Time it loads
-    private void loadPreferences(){
-
+    private void loadPrefrences(){
 
         boolean isRssFeedEnabled = sharedPreferences.getBoolean(KEY_PREF_RSS_FEED_PREFERENCE,true);
         if(isRssFeedEnabled){
@@ -347,6 +328,34 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
 
         }
 
+
+
+    }
+
+    public void setNamePreference(){
+        TextView userName = (TextView) findViewById(R.id.txtViewName);
+
+        String user_name = sharedPreferences.getString("user_name","");
+
+        userName.setText(user_name);
+    }
+
+
+
+    public void getReadyToolBar(){
+
+        //setting up the toolbar layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mainpage_toobar);
+        setSupportActionBar(toolbar);
+
+        //creating a navigation drawer.
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //creating the action bar
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        toolbar.setTitle("");
     }
 
 
