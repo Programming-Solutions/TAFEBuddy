@@ -1,6 +1,5 @@
 package programmingsolutions.tafebuddy;
 
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -19,13 +17,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,13 +35,12 @@ import rss_classes.ReadRSS;
 
 public class MainPage extends AppCompatActivity implements View.OnClickListener, CustomTabActivityHelper.ConnectionCallback, NavigationView.OnNavigationItemSelectedListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-
     //creating the recycler view to handle the rss feed
     RecyclerView recyclerView ;
-    private Toolbar toolbar;
+
     //setting up the custom tab helper class
     private CustomTabActivityHelper customTabActivityHelper;
-    private SharedPreferences sharedPreferences;
+
     //this is for Firebase analysiation
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -75,11 +70,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         setContentView(R.layout.navigation_layout);
-        toolbar = (Toolbar) findViewById(R.id.mainpage_toobar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("");
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -315,9 +306,9 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
     }
 
 
-    //this is where you can set the preferences for the app call from the onCreate Method as having it
+    //this is where you can set the prefrences for the app call from the onCreate Method as having it
     //in the onStart method makes it load the RSS feed every Time it loads
-    private void loadPreferences(){
+    private void loadPrefrences(){
 
         boolean isRssFeedEnabled = sharedPreferences.getBoolean(KEY_PREF_RSS_FEED_PREFERENCE,true);
         if(isRssFeedEnabled){
