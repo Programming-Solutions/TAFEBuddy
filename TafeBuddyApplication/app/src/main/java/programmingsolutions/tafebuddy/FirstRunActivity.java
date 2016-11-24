@@ -19,7 +19,6 @@ import android.Manifest;
 
 public class FirstRunActivity extends AppCompatActivity {
 
-
     static final int PERMISSION_ALL = 200;
 
     @Override

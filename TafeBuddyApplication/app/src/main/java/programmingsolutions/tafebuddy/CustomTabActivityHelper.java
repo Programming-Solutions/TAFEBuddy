@@ -45,7 +45,7 @@ class CustomTabActivityHelper implements ServiceConnectionCallback {
     static final String ACCOUNT_MAIN_PAGE = "https://my.tafesa.edu.au/PROD/twbkwbis.P_GenMenu?name=bmenu.P_MainMnu#pageName=bmenu--P_StuMainMnu___UID0&pageReferrerId=&pageDepth=2&options=false";
     static final String FILES = "http://netstorage.tafesa.edu.au/SitePages/Home.aspx";
     static final String COURSE_INFORMATION = "https://www.tafensw.edu.au/courses/tafe-nsw-course-search";
-    static final String MOODLE = "http://learn.tafesa.edu.au/my/";
+    static final String MOODLE = "http://learn.tafesa.edu.au/course/view.php?id=3129";
 
 
 
@@ -56,6 +56,8 @@ class CustomTabActivityHelper implements ServiceConnectionCallback {
                               CustomTabsIntent customTabsIntent,
                               Uri uri,
                               CustomTabFallBack fallBack){
+
+        CustomTabsHelper.getPackages();
 
         String packageName = CustomTabsHelper.getPackageNameToUse(activity);
 
