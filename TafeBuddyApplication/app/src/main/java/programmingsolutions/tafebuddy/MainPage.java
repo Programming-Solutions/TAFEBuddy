@@ -41,6 +41,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
     //setting up the custom tab helper class
     private CustomTabActivityHelper customTabActivityHelper;
 
+
     //this is for Firebase analysiation
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -59,7 +60,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
     static final String USERDETAILS = "https://my.tafesa.edu.au/PROD/twbkwbis.P_GenMenu?name=bmenu.P_MainMnu#pageName=bmenu--P_GenMnu___UID1&pageReferrerId=&pageDepth=2&options=false";
     static final String EMAIL = "https://outlook.office.com/owa/?realm=student.tafesa.edu.au&exsvurl=1&delegatedOrg=tafesaedu.onmicrosoft.com&ll-cc=1033&modurl=0";
     static final String COURSE_INFORMATION = "https://www.tafensw.edu.au/courses/tafe-nsw-course-search";
-    static final String MOODLE = "http://learn.tafesa.edu.au/my/";
+    static final String MOODLE = "http://learn.tafesa.edu.au/course/view.php?id=3129";
 
 
     //prefrences Strings
@@ -94,6 +95,10 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         customTabActivityHelper = new CustomTabActivityHelper();
         //lets the helper know that we want this class to be used.
         customTabActivityHelper.setConnectionCallback(this);
+        CustomTabsHelper.getPackageNameToUse(this);
+
+
+
 
 
 
@@ -117,6 +122,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
     @Override
     protected void onStart() {
         super.onStart();
+        CustomTabsHelper.getPackageNameToUse(this);
         customTabActivityHelper.bindCustomTabsService(this);
 
         getReadyToolBar();
@@ -143,7 +149,10 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnAgenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 //parseing the string into a uri
+                //debugging
+                Toast.makeText(MainPage.this, "Agenda Clicked", Toast.LENGTH_SHORT).show();
+
+                //parseing the string into a uri
                 Uri uri = Uri.parse(COURSE_SCHEDULE);
                 openCustomTab(uri);
 
@@ -157,6 +166,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnBookCounselling.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MainPage.this, "BookCounselling Clicked", Toast.LENGTH_SHORT).show();
                 Uri uri = Uri.parse(COUNSELLING_BOOKING);
                 openCustomTab(uri);
 
@@ -166,7 +176,8 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnFAQPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Uri uri = Uri.parse(FAQ);
+                Toast.makeText(MainPage.this, "FAQPage Clicked", Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse(FAQ);
                 openCustomTab(uri);
             }
         });
@@ -174,7 +185,8 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Uri uri = Uri.parse(ACCOUNT);
+                Toast.makeText(MainPage.this, "Account Clicked", Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse(ACCOUNT);
                 openCustomTab(uri);
             }
         });
@@ -182,7 +194,8 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnVideos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Uri uri = Uri.parse(EMAIL);
+                Toast.makeText(MainPage.this, "Email Clicked", Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse(EMAIL);
                 openCustomTab(uri);
 
             }
@@ -191,7 +204,7 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(MainPage.this, "Map Clicked", Toast.LENGTH_SHORT).show();
                 Intent mapIntent = new Intent(MainPage.this, CampusListActivity.class);
                 startActivity(mapIntent);
             }
@@ -276,7 +289,8 @@ public class MainPage extends AppCompatActivity implements View.OnClickListener,
         //this should add actions to the custom tab pages
         prepareActionButton(builder);
 
-        CustomTabsHelper.getPackageNameToUse(this);
+
+
         //this will check to see what browser is availible to handle custom tab.
         CustomTabsIntent customTabsIntent = builder.build();
         CustomTabsHelper.addKeepAliveExtra(getBaseContext(), customTabsIntent.intent);

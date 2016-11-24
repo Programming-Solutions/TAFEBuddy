@@ -9,6 +9,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="nav_menu_description">Navigate to where you would like to go</string>
 
     <!-- Strings related to Main Page buttons -->
     <string name="btn_timetable"> Timetable</string>
